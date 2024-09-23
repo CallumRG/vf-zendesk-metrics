@@ -20,7 +20,7 @@ def send_support_metrics_email(df):
     #emails = ['callum.gillies@voiceflow.com', 'tahsim.ahmed@voiceflow.com','braden@voiceflow.com']
     emails = ['callum.gillies@voiceflow.com']
 
-    print(f'emails: {emails}')
+    #print(f'emails: {emails}')
 
     # Convert necessary columns to datetime and remove timezone information
     df['solved_at'] = pd.to_datetime(df['solved_at']).dt.tz_localize(None)
