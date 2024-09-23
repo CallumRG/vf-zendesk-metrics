@@ -2,7 +2,7 @@ name: Generate Support Team Metric Email
 
 on:
   schedule:
-    - cron: '0 13 * * MON'
+    - cron: '55 12 * * MON'
 
   workflow_dispatch: # Allows you to manually trigger the workflow from GitHub UI
 
@@ -34,6 +34,4 @@ jobs:
 
       - name: Run Zendesk Report
         run: |
-          echo "ZENDESK_SUBDOMAIN=${{ secrets.ZENDESK_SUBDOMAIN }}"
-          echo "ZENDESK_EMAIL=${{ secrets.ZENDESK_EMAIL }}"
           python main.py 
