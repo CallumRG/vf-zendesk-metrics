@@ -154,8 +154,7 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
-# Data
-.csv
+
 
 # PyCharm
 #  JetBrains specific template is maintained in a separate JetBrains.gitignore that can
@@ -163,3 +162,7 @@ cython_debug/
 #  and can be added to the global gitignore or merged into this file.  For a more nuclear
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
+
+# Data
+zendesk_metric_data.csv
+zendesk_metric_data.pkl

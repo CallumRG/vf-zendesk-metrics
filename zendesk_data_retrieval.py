@@ -15,7 +15,6 @@ def fetch_zendesk_data(start_time=0, save_csv=False, save_pickle=False):
     auth = (f'{email_address}/token', api_token)
     url = f"https://{subdomain}.zendesk.com/api/v2/incremental/tickets.json?exclude_deleted=true&include=metric_sets,users&start_time={start_time}"
 
-    # Lists to hold the results
     tickets, users, metric_sets = [], [], []
 
     while url:
@@ -49,7 +48,7 @@ def fetch_zendesk_data(start_time=0, save_csv=False, save_pickle=False):
 
         url = new_url  # Update URL for the next page
 
-    # Convert lists to pandas DataFrames
+    # convert lists to pandas dfs
     tickets_df = pd.DataFrame(tickets)
     tickets_df.drop(columns=['subject', 'raw_subject', 'description'], inplace=True)
     tickets_df = tickets_df.sort_values(by='updated_at').drop_duplicates(subset='id', keep='last')
@@ -60,7 +59,7 @@ def fetch_zendesk_data(start_time=0, save_csv=False, save_pickle=False):
     metrics_df = pd.DataFrame(metric_sets)
     metrics_df = metrics_df.sort_values(by='updated_at').drop_duplicates(subset='ticket_id', keep='last')
 
-    # Merge ticket metrics and user details into the tickets DataFrame
+    # merge ticket metrics and user details into the tickets DataFrame
     tickets_with_metrics = pd.merge(left=tickets_df, right=metrics_df, left_on='id', right_on='ticket_id', how='left')
     final_df = pd.merge(left=tickets_with_metrics, right=users_df[['id', 'name']], left_on='assignee_id', right_on='id', how='left', suffixes=('', '_assignee'))
     

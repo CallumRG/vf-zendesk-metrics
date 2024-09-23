@@ -40,25 +40,18 @@ def send_support_metrics_email(df):
 
     # Extract the 'score' field from 'satisfaction_rating' dictionary-like column
     df['satisfaction_score'] = df['satisfaction_rating'].apply(
-        lambda x: x.get('score') if isinstance(x, dict) else (eval(x).get('score') if pd.notnull(x) and isinstance(x, str) else None)
+        lambda x: x.get('score') if isinstance(x, dict) else None
     )
 
     # Function to extract the value for a specific field id from the custom_fields
-    def get_custom_field_value(custom_fields_str, field_id):
-        if pd.notnull(custom_fields_str):
-            try:
-                if isinstance(custom_fields_str, str):
-                    custom_fields = ast.literal_eval(custom_fields_str)
-                elif isinstance(custom_fields_str, list):
-                    custom_fields = custom_fields_str
-                else:
-                    return None
-
-                for field in custom_fields:
-                    if field['id'] == field_id:
-                        return field.get('value')
-            except (ValueError, SyntaxError):
-                return None
+    def get_custom_field_value(custom_fields, field_id):
+        if isinstance(custom_fields, list):
+            for field in custom_fields:
+                if isinstance(field, dict) and field.get('id') == field_id:
+                    return field.get('value')
+        elif isinstance(custom_fields, dict):
+            if custom_fields.get('id') == field_id:
+                return custom_fields.get('value')
         return None
 
     # Apply the function to extract the specific field value for the given field_id
@@ -68,19 +61,19 @@ def send_support_metrics_email(df):
 
     # Define business time values instead of calendar time for relevant metrics
     df['reply_time_in_minutes'] = df['reply_time_in_minutes'].apply(
-        lambda x: x.get('business') if isinstance(x, dict) else (eval(x).get('business') if pd.notnull(x) and isinstance(x, str) else None)
+        lambda x: x.get('business') if isinstance(x, dict) else None
     )
     df['first_resolution_time_in_minutes'] = df['first_resolution_time_in_minutes'].apply(
-        lambda x: x.get('business') if isinstance(x, dict) else (eval(x).get('business') if pd.notnull(x) and isinstance(x, str) else None)
+        lambda x: x.get('business') if isinstance(x, dict) else None
     )
     df['full_resolution_time_in_minutes'] = df['full_resolution_time_in_minutes'].apply(
-        lambda x: x.get('business') if isinstance(x, dict) else (eval(x).get('business') if pd.notnull(x) and isinstance(x, str) else None)
+        lambda x: x.get('business') if isinstance(x, dict) else None
     )
     df['agent_wait_time_in_minutes'] = df['agent_wait_time_in_minutes'].apply(
-        lambda x: x.get('business') if isinstance(x, dict) else (eval(x).get('business') if pd.notnull(x) and isinstance(x, str) else None)
+        lambda x: x.get('business') if isinstance(x, dict) else None
     )
     df['requester_wait_time_in_minutes'] = df['requester_wait_time_in_minutes'].apply(
-        lambda x: x.get('business') if isinstance(x, dict) else (eval(x).get('business') if pd.notnull(x) and isinstance(x, str) else None)
+        lambda x: x.get('business') if isinstance(x, dict) else None
     )
 
     # Convert time metrics to hours
@@ -185,7 +178,7 @@ def send_support_metrics_email(df):
         by_group[col] = by_group[col].apply(round_to_two_decimals)
 
     # Remove the specified columns from the final tables
-    columns_to_remove = ['Avg Requester Wait Time (hrs)', 'Avg Last Assignment to Resolution (hrs)', 'Avg Full Resolution Time (hrs)']
+    columns_to_remove = ['% of Tickets Rated','Avg Requester Wait Time (hrs)', 'Avg Last Assignment to Resolution (hrs)', 'Avg Full Resolution Time (hrs)']
 
     by_rep = by_rep.drop(columns=columns_to_remove)
     by_group = by_group.drop(columns=columns_to_remove)

@@ -4,10 +4,11 @@ import pandas as pd
 
 def main():
     # Retrieve Zendesk data
-    df = fetch_zendesk_data(save_csv=True, save_pickle=True) 
+    #df = fetch_zendesk_data(save_pickle=True) 
 
-    #df = pd.read_csv('zendesk_metric_data.csv')
-    #df = pd.read_pickle('zendesk_metric_data.pkl')
+    #pkl for test running (without needing to do api calls everytime)
+    df = pd.read_pickle('zendesk_metric_data.pkl')
+
     # Send support metrics email
     send_support_metrics_email(df)
     
