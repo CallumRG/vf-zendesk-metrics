@@ -6,6 +6,14 @@ on:
 
   workflow_dispatch: # Allows you to manually trigger the workflow from GitHub UI
 
+env:
+  ZENDESK_SUBDOMAIN: ${{ secrets.ZENDESK_SUBDOMAIN }}
+  ZENDESK_EMAIL: ${{ secrets.ZENDESK_EMAIL }}
+  ZENDESK_API_TOKEN: ${{ secrets.ZENDESK_API_TOKEN }}
+  RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+  RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
+  EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          
 jobs:
   zendesk-report:
     runs-on: ubuntu-latest
@@ -25,13 +33,6 @@ jobs:
           pip install pandas python-dotenv resend
 
       - name: Run Zendesk Report
-        env:
-          ZENDESK_SUBDOMAIN: ${{ secrets.ZENDESK_SUBDOMAIN }}
-          ZENDESK_EMAIL: ${{ secrets.ZENDESK_EMAIL }}
-          ZENDESK_API_TOKEN: ${{ secrets.ZENDESK_API_TOKEN }}
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
-          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
         run: |
           echo "ZENDESK_SUBDOMAIN=${{ secrets.ZENDESK_SUBDOMAIN }}"
           echo "ZENDESK_EMAIL=${{ secrets.ZENDESK_EMAIL }}"
