@@ -5,9 +5,10 @@ from dotenv import load_dotenv
 import os
 import resend
 
-def send_support_metrics_email(df):
+def send_support_metrics_email(df, load_dotenv = False):
     # Load environment variables
-    load_dotenv()
+    if load_dotenv:
+        load_dotenv()
 
     resend.api_key = os.getenv('RESEND_API_KEY')
     audience_id = os.getenv('RESEND_AUDIENCE_ID')

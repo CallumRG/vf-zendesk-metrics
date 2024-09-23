@@ -4,9 +4,10 @@ import pandas as pd
 from dotenv import load_dotenv
 import os
 
-def fetch_zendesk_data(start_time=0, save_csv=False, save_pickle=False):
+def fetch_zendesk_data(start_time=0, save_csv=False, save_pickle=False, load_dotenv = False):
     # Load environment variables
-    load_dotenv()
+    if load_dotenv:
+        load_dotenv()
 
     subdomain = os.getenv('ZENDESK_SUBDOMAIN')
     email_address = os.getenv('ZENDESK_EMAIL')
