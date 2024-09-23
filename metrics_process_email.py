@@ -5,9 +5,9 @@ from dotenv import load_dotenv
 import os
 import resend
 
-def send_support_metrics_email(df, load_dotenv = False):
+def send_support_metrics_email(df, use_load_dotenv = False):
     # Load environment variables
-    if load_dotenv:
+    if use_load_dotenv:
         load_dotenv()
 
     resend.api_key = os.getenv('RESEND_API_KEY')
@@ -19,9 +19,22 @@ def send_support_metrics_email(df, load_dotenv = False):
 
     #emails = [contact['email'] for contact in audience['data']]
     #emails = ['callum.gillies@voiceflow.com', 'tahsim.ahmed@voiceflow.com','braden@voiceflow.com']
-    emails = ['callum.gillies@voiceflow.com']
+    #emails = ['callum.gillies@voiceflow.com']
 
-    #print(f'emails: {emails}')
+    emails = ['callum.gillies@voiceflow.com', 
+              'tahsim.ahmed@voiceflow.com', 
+              'chidinma.umenwofornweze@voiceflow.com', 
+              'chris.im@voiceflow.com', 
+              'dan.donovan@voiceflow.com', 
+              'daniel.dsouza@voiceflow.com', 
+              'marianna.adamian@voiceflow.com', 
+              'sam.burns@voiceflow.com', 
+              'andrew.lawrence@voiceflow.com', 
+              'braden@voiceflow.com', 
+              'henry.wang@voiceflow.com', 
+              'michael@voiceflow.com', 
+              'shantel.tse@voiceflow.com', 
+              'tyler@voiceflow.com']
 
     # Convert necessary columns to datetime and remove timezone information
     df['solved_at'] = pd.to_datetime(df['solved_at']).dt.tz_localize(None)
