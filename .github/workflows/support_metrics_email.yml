@@ -2,7 +2,7 @@ name: Generate Support Team Metric Email
 
 on:
   schedule:
-    - cron: '0 9 * * MON'
+    - cron: '0 13 * * MON'
 
   workflow_dispatch: # Allows you to manually trigger the workflow from GitHub UI
 
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.9'  # or whatever Python version you're using
+          python-version: '3.12.4'
 
       - name: Install Dependencies
         run: |
@@ -32,4 +32,4 @@ jobs:
           RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
           RESEND_AUDIENCE_ID: ${{ secrets.RESEND_AUDIENCE_ID }}
           EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
-        run: python path/to/your_script.py  # Update with the actual path to your Python script
+        run: python main.py 
