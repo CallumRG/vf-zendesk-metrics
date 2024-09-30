@@ -2,7 +2,7 @@ name: Generate Support Team Metric Email
 
 on:
   schedule:
-    - cron: '55 12 * * MON'
+    - cron: '40 12 * * MON'
 
   workflow_dispatch: # Allows you to manually trigger the workflow from GitHub UI
 
